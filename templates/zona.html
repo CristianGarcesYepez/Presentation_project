@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ zona.title() }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/logoad.png') }}">
+</head>
+<body class="zona">
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='imagenes/logoIPSP.png') }}" alt="Logo Empresa" class="logo-empresa">
+            </div>
+            <h1>{{ zona.title() }}</h1>
+            <div class="navigation-controls">
+                {% set zonas = ['africa', 'asia', 'churute', 'korea'] %}
+                {% set current_index = zonas.index(zona.lower()) if zona.lower() in zonas else 0 %}
+                {% set next_zona = zonas[(current_index + 1) % zonas|length] %}
+                <a href="{{ url_for('mostrar_zona', nombre_zona=next_zona) }}" class="btn-siguiente">
+                    Siguiente Zona →
+                </a>
+            </div>
+        </div>
+    </header>
+
+    {% if imagenes %}
+    <div class="carrusel-container">
+        <div class="carrusel-wrapper">
+            <button class="carrusel-btn carrusel-prev" onclick="cambiarImagen(-1)">❮</button>
+            <div class="carrusel-content">
+                {% for imagen in imagenes %}
+                    <img src="{{ imagen }}" class="imagen-carrusel {% if loop.first %}active{% endif %}" alt="Imagen de {{ zona }}">
+                {% endfor %}
+            </div>
+            <button class="carrusel-btn carrusel-next" onclick="cambiarImagen(1)">❯</button>
+        </div>
+        <div class="carrusel-indicators">
+            {% for imagen in imagenes %}
+                <span class="indicator {% if loop.first %}active{% endif %}" onclick="mostrarImagen({{ loop.index0 }})"></span>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="sin-imagenes-container">
+        <p class="sin-imagenes">No hay imágenes disponibles para esta zona.</p>
+    </div>
+    {% endif %}
+
+    <section class="tabla-trabajos">
+        {% if trabajos %}
+        <div class="tabla-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Trabajo</th>
+                        <th>Tipo</th>
+                        <th>Fecha</th>
+                        <th>Días</th>
+                        <th>% Avance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trabajo in trabajos %}
+                    <tr>
+                        <td>{{ trabajo.get("Trabajo", "N/A") }}</td>
+                        <td>{{ trabajo.get("Tipo", "N/A") }}</td>
+                        <td>{{ trabajo.get("Fecha").strftime('%Y-%m-%d') if trabajo.get("Fecha") else 'N/A' }}</td>
+                        <td>{{ trabajo.get("Días", "N/A") }}</td>
+                        <td>
+                            <div class="info-card">
+                                <div class="battery-container">
+                                    {% set avance = trabajo.get("Avance") %}
+                                    {% if avance < 40 %}
+                                    {% set clase = 'low' %}
+                                    {% elif avance < 70 %}
+                                    {% set clase = 'medium' %}
+                                    {% else %}
+                                    {% set clase = 'high' %}
+                                    {% endif %}
+                                    <div class="battery-fill {{ clase }}" style="width: {{ avance }}%;"></div>
+                                    <div class="battery-text">{{ avance }}%</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="sin-datos-container">
+            <p class="sin-datos">No hay trabajos registrados para esta zona.</p>
+        </div>
+        {% endif %}
+    </section>
+
+    <footer>
+        <a href="{{ url_for('portada') }}" class="volver">← Volver al Menú</a>
+    </footer>
+
+    <script>
+        let imagenActual = 0;
+        const imagenes = document.querySelectorAll('.imagen-carrusel');
+        const indicadores = document.querySelectorAll('.indicator');
+
+        function mostrarImagen(index) {
+            // Ocultar imagen actual
+            imagenes[imagenActual].classList.remove('active');
+            indicadores[imagenActual].classList.remove('active');
+            
+            // Mostrar nueva imagen
+            imagenActual = index;
+            imagenes[imagenActual].classList.add('active');
+            indicadores[imagenActual].classList.add('active');
+        }
+
+        function cambiarImagen(direccion) {
+            let nuevoIndex = imagenActual + direccion;
+            
+            if (nuevoIndex >= imagenes.length) {
+                nuevoIndex = 0;
+            } else if (nuevoIndex < 0) {
+                nuevoIndex = imagenes.length - 1;
+            }
+            
+            mostrarImagen(nuevoIndex);
+        }
+
+        // Auto-avance cada 5 segundos (opcional)
+        /*setInterval(() => {
+            if (imagenes.length > 1) {
+                cambiarImagen(1);
+            }
+        }, 5000);*/
+    </script>
+</body>
+</html>

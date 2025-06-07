@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de Trabajos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/logoad.png') }}">
+</head>
+<body class="portada">
+    <div class="contenedor-portada">
+        <h1>INFORME TRABAJOS DE ZONAS</h1>
+        <h2>SEMANA #{{ semana }}</h2>
+    </div>
+    <div class="zona-links">
+        <h3>Selecciona una Zona:</h3>
+        <ul>
+            {% for zona in ['Africa', 'Asia', 'Churute', 'Korea'] %}
+                <li><a href="{{ url_for('mostrar_zona', nombre_zona=zona) }}">{{ zona }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

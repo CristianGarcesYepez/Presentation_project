@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página No Encontrada - 404</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/logoad.png') }}">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .error-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+        }
+        
+        .error-code {
+            font-size: 6em;
+            font-weight: bold;
+            color: #102030;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .error-message {
+            font-size: 1.5em;
+            color: #666;
+            margin: 20px 0;
+        }
+        
+        .error-description {
+            font-size: 1.1em;
+            color: #888;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .error-btn {
+            display: inline-block;
+            text-decoration: none;
+            font-weight: bold;
+            color: #102030;
+            border: 2px solid #102030;
+            padding: 12px 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            box-shadow: 0 4px 15px rgba(16, 32, 48, 0.1);
+        }
+        
+        .error-btn:hover {
+            background: linear-gradient(145deg, #102030, #2c5aa0);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 32, 48, 0.3);
+        }
+        
+        .error-btn.primary {
+            background: linear-gradient(145deg, #102030, #2c5aa0);
+            color: white;
+        }
+        
+        .error-btn.primary:hover {
+            background: linear-gradient(145deg, #2c5aa0, #102030);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <h1 class="error-code">404</h1>
+            <h2 class="error-message">Página No Encontrada</h2>
+            <p class="error-description">
+                Lo sentimos, la página que estás buscando no existe o ha sido movida.
+                Verifica la URL o regresa al menú principal.
+            </p>
+            <div class="error-actions">
+                <a href="{{ url_for('portada') }}" class="error-btn primary">← Ir al Menú Principal</a>
+                <a href="javascript:history.back()" class="error-btn">← Volver Atrás</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
