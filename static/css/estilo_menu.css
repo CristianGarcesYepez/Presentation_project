@@ -1,0 +1,381 @@
+/* === ESTILOS ESPECÍFICOS PARA MENÚ === */
+
+/* === ESTILOS BASE DEL BODY === */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #102030;
+    min-height: 100vh;
+}
+
+/* === ESTILOS DE LA PORTADA/MENÚ === */
+.portada {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f0f4f8 0%, #d6e7f0 100%);
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contenedor-portada {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
+}
+
+.contenedor-portada h1 {
+    font-size: 2.5em;
+    background: linear-gradient(45deg, #102030, #2c5aa0);
+    color: white;
+    padding: 15px 25px;
+    margin: 0 0 15px 0;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(16, 32, 48, 0.3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.contenedor-portada h2 {
+    font-size: 1.5em;
+    margin: 0;
+    color: #102030;
+    font-weight: 600;
+}
+
+/* === CONTENEDOR DE ENLACES DE ZONAS/MEGAZONAS === */
+.zona-links {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    margin-bottom: 15px;
+}
+
+.zona-links h3 {
+    color: #102030;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    font-weight: 600;
+    text-align: center;
+    position: relative;
+}
+
+.zona-links h3::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #102030, #2c5aa0);
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
+.zona-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.zona-links li {
+    margin: 0;
+}
+
+/* === ESTILOS ESPECÍFICOS PARA MEGAZONAS === */
+.megazona-btn {
+    background: linear-gradient(135deg, #2c5aa0 0%, #4a7c94 100%) !important;
+    color: white !important;
+    padding: 15px !important;
+    border-radius: 15px !important;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none !important;
+    box-shadow: 0 8px 25px rgba(44, 90, 160, 0.3) !important;
+    text-align: left !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.megazona-btn:hover {
+    transform: translateY(-8px) scale(1.03) !important;
+    box-shadow: 0 20px 40px rgba(44, 90, 160, 0.4) !important;
+    background: linear-gradient(135deg, #4a7c94 0%, #6b9dc2 100%) !important;
+}
+
+.megazona-btn.sin-datos {
+    background: linear-gradient(135deg, #6c757d 0%, #868e96 100%) !important;
+    opacity: 0.7;
+}
+
+.megazona-btn.sin-datos:hover {
+    background: linear-gradient(135deg, #868e96 0%, #adb5bd 100%) !important;
+    box-shadow: 0 15px 30px rgba(108, 117, 125, 0.3) !important;
+}
+
+.megazona-nombre {
+    font-size: 1.3em !important;
+    font-weight: 700 !important;
+    color: white !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.megazona-info {
+    font-size: 0.9em !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+}
+
+.zona-principal {
+    font-size: 0.85em !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-style: italic;
+}
+
+.sin-datos-text {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* === CONTENEDOR DE AGENDA === */
+.agenda-link {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    margin-top: 15px;
+    border-top: 3px solid #28a745;
+}
+
+.agenda-link h3 {
+    color: #28a745;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    font-weight: 600;
+    text-align: center;
+    position: relative;
+}
+
+.agenda-link h3::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
+.agenda-link ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.agenda-link li {
+    margin: 0;
+}
+
+.agenda-link a {
+    display: block;
+    text-decoration: none;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white !important;
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 18px 28px;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.agenda-link a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+    z-index: 0;
+}
+
+.agenda-link a:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.agenda-link a:hover {
+    background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(40, 167, 69, 0.4);
+}
+
+.agenda-link a span {
+    position: relative;
+    z-index: 1;
+}
+
+.agenda-link a::after {
+    content: '📅';
+    margin-left: 10px;
+    font-size: 1.1em;
+}
+
+/* === LOGO EN LA ESQUINA === */
+.logo-container {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+.btn-logo {
+    text-decoration: none;
+}
+
+.logo-empresa {
+    width: 110px;
+    height: 90px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.logo-empresa:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* === ANIMACIONES === */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.zona-links {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+.agenda-link {
+    animation: slideInUp 0.8s ease forwards;
+    animation-delay: 0.2s;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 900px) {
+    .zona-links ul {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-container {
+        bottom: 1rem;
+        left: 1rem;
+    }
+    
+    .logo-empresa {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .zona-links, .agenda-link {
+        padding: 25px 20px;
+        margin-bottom: 15px;
+    }
+    
+    .zona-links h3, .agenda-link h3 {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+    
+    .zona-links ul, .agenda-link ul {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .contenedor-portada h1 {
+        font-size: 2em;
+        padding: 15px 20px;
+    }
+    
+    .megazona-btn {
+        padding: 15px !important;
+    }
+    
+    .megazona-nombre {
+        font-size: 1.1em !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .logo-container {
+        bottom: 0.5rem;
+        left: 0.5rem;
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 480px) {
+    .zona-links ul {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+    
+    .logo-container {
+        bottom: 0.5rem;
+        left: 0.5rem;
+    }
+    
+    .logo-empresa {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .zona-links, .agenda-link {
+        padding: 20px 15px;
+        border-radius: 15px;
+    }
+    
+    .agenda-link a {
+        padding: 14px 20px;
+        font-size: 1em;
+    }
+}

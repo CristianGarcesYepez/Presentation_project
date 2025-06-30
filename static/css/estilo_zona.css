@@ -1,3 +1,6 @@
+/* === ESTILOS ESPECÍFICOS PARA ZONA INDIVIDUAL === */
+
+/* === ESTILOS BASE DEL BODY === */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -7,92 +10,7 @@ body {
     min-height: 100vh;
 }
 
-/* === ESTILOS DE LA PORTADA === */
-.portada {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    text-align: center;
-}
-
-.contenedor-portada {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(10px);
-    margin-bottom: 30px;
-}
-
-.contenedor-portada h1 {
-    font-size: 3em;
-    background: linear-gradient(45deg, #102030, #2c5aa0);
-    color: white;
-    padding: 20px 30px;
-    margin: 0 0 20px 0;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(16, 32, 48, 0.3);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.contenedor-portada h2 {
-    font-size: 1.5em;
-    margin: 0;
-    color: #102030;
-    font-weight: 600;
-}
-
-.zona-links {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-}
-
-.zona-links h3 {
-    color: #102030;
-    margin-bottom: 20px;
-    font-size: 1.3em;
-}
-
-.zona-links ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.zona-links li {
-    margin: 0;
-}
-
-.zona-links a {
-    display: block;
-    text-decoration: none;
-    color: #102030;
-    font-weight: bold;
-    font-size: 1.2em;
-    border: 2px solid #102030;
-    padding: 12px 20px;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(16, 32, 48, 0.1);
-    background: linear-gradient(145deg, #ffffff, #f0f0f0);
-}
-
-.zona-links a:hover {
-    background: linear-gradient(145deg, #102030, #2c5aa0);
-    color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(16, 32, 48, 0.3);
-}
-
-/* === ESTILOS DEL HEADER === */
+/* === HEADER DE ZONA === */
 header {
     background: linear-gradient(135deg, #102030 0%, #2c5aa0 100%);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -108,22 +26,12 @@ header {
     padding: 15px 30px;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+    padding-top: 35px;
 }
 
 .logo-container {
     flex-shrink: 0;
-}
-
-.logo-empresa {
-    height: 60px;
-    width: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-}
-
-.logo-empresa:hover {
-    transform: scale(1.05);
 }
 
 header h1 {
@@ -159,7 +67,37 @@ header h1 {
     box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
 }
 
-/* === CARRUSEL MEJORADO === */
+/* === BREADCRUMB === */
+.breadcrumb {
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.breadcrumb-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.breadcrumb-separator {
+    margin: 0 8px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.breadcrumb-current {
+    color: white;
+    font-weight: 600;
+}
+
+/* === CARRUSEL DE IMÁGENES === */
 .carrusel-container {
     margin: 30px auto;
     max-width: 1000px;
@@ -268,7 +206,7 @@ header h1 {
     margin: 0;
 }
 
-/* === TABLA MEJORADA === */
+/* === TABLA DE TRABAJOS === */
 .tabla-trabajos {
     padding: 30px 20px;
     max-width: 1200px;
@@ -346,7 +284,7 @@ table tr:last-child td:last-child {
     margin: 0;
 }
 
-/* === BATERÍA MEJORADA === */
+/* === BATERÍA DE PROGRESO === */
 .battery-container {
     width: 100%;
     max-width: 200px;
@@ -413,30 +351,56 @@ table tr:last-child td:last-child {
     background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
 }
 
-/* === FOOTER === */
+/* === LOGO Y FOOTER === */
+.logo-container {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+.logo-empresa {
+    width: 110px;
+    height: 90px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.logo-empresa:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
 footer {
-    text-align: center;
-    margin: 40px 20px 20px;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 10;
 }
 
 .volver {
-    display: inline-block;
+    background: linear-gradient(50deg, #2f373f, #236190);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
-    color: #102030;
-    border: 2px solid #102030;
-    padding: 12px 25px;
-    border-radius: 12px;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
     transition: all 0.3s ease;
-    background: linear-gradient(145deg, #ffffff, #f0f0f0);
-    box-shadow: 0 4px 15px rgba(16, 32, 48, 0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .volver:hover {
-    background: linear-gradient(145deg, #102030, #2c5aa0);
-    color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(16, 32, 48, 0.3);
+    background: linear-gradient(45deg, #5a6268, #495057);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 117, 125, 0.6);
 }
 
 /* === RESPONSIVE DESIGN === */
@@ -472,13 +436,48 @@ footer {
         font-size: 0.9em;
     }
     
-    .contenedor-portada h1 {
-        font-size: 2em;
-        padding: 15px 20px;
+    .logo-container {
+        bottom: 1rem;
+        left: 1rem;
     }
     
-    .zona-links ul {
-        grid-template-columns: 1fr;
+    .logo-empresa {
+        width: 50px;
+        height: 50px;
+    }
+    
+    footer {
+        bottom: 1rem;
+        right: 1rem;
+    }
+    
+    .volver {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb {
+        position: static;
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 0.8em;
+    }
+    
+    .header-content {
+        padding-top: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .logo-container {
+        bottom: 0.5rem;
+        left: 0.5rem;
+        transform: scale(0.8);
+    }
+    
+    footer {
+        bottom: 0.5rem;
+        right: 0.5rem;
     }
 }
 
@@ -498,6 +497,26 @@ footer {
     
     .battery-text {
         line-height: 26px;
+        font-size: 0.8rem;
+    }
+    
+    .logo-container {
+        bottom: 0.5rem;
+        left: 0.5rem;
+    }
+    
+    .logo-empresa {
+        width: 40px;
+        height: 40px;
+    }
+    
+    footer {
+        bottom: 0.5rem;
+        right: 0.5rem;
+    }
+    
+    .volver {
+        padding: 0.6rem 1.2rem;
         font-size: 0.8rem;
     }
 }

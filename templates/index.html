@@ -2,22 +2,33 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Informe de Trabajos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='imagenes/logoad.png') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santa Priscila - Trabajos que Inciden en Días de Secado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_index.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/logo.png') }}">
+
 </head>
-<body class="portada">
-    <div class="contenedor-portada">
-        <h1>INFORME DETALLE DE TRABAJOS DE ZONAS</h1>
-        <h2>SEMANA #{{ semana }}</h2>
+<body>
+     <!-- Imagen de background -->
+    <div class="background-overlay"></div>
+    
+    <div class="decoracion"></div>
+    <div class="decoracion"></div>
+    
+    <div class="container">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='imagenes/logo.png') }}" alt="Logo Santa Priscila" class="logo">
+        </div>
+        
+        <h1 class="titulo-principal">TRABAJOS QUE INCIDEN EN DÍAS DE SECADO</h1>
+        
+        <h2 class="subtitulo">SEMANA #{{ semana - 1 }}</h2>
+        
+        <p class="departamento">PRODUCCIÓN</p>
     </div>
-    <div class="zona-links">
-        <h3>Selecciona una Zona:</h3>
-        <ul>
-            {% for zona in ['Africa', 'Asia', 'Churute', 'Korea'] %}
-                <li><a href="{{ url_for('mostrar_zona', nombre_zona=zona) }}">{{ zona }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
+
+    <a href="{{ url_for('mostrar_agenda') }}" class="btn-continuar">
+        CONTINUAR →
+    </a>
 </body>
 </html>

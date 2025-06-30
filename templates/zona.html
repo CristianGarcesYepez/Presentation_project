@@ -3,24 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ zona.title() }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='imagenes/logoad.png') }}">
+    <title>{{ zona.upper() }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_zona.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/logo.png') }}">
 </head>
 <body class="zona">
     <header>
         <div class="header-content">
-            <div class="logo-container">
-                <img src="{{ url_for('static', filename='imagenes/logoIPSP.png') }}" alt="Logo Empresa" class="logo-empresa">
+            <div class="breadcrumb">
+                <a href="{{ url_for('menu') }}" class="breadcrumb-link">Menú</a>
+                {% if megazona_actual %}
+                    <span class="breadcrumb-separator">→</span>
+                    <a href="{{ url_for('mostrar_megazona', nombre_megazona=megazona_actual) }}" class="breadcrumb-link">{{ megazona_actual }}</a>
+                    <span class="breadcrumb-separator">→</span>
+                {% endif %}
+                <span class="breadcrumb-current">{{ zona.upper() }}</span>
             </div>
-            <h1>{{ zona.title() }}</h1>
+            <h1><strong>{{ zona.upper() }}</strong></h1>
             <div class="navigation-controls">
-                {% set zonas = ['africa', 'asia', 'churute', 'korea'] %}
-                {% set current_index = zonas.index(zona.lower()) if zona.lower() in zonas else 0 %}
-                {% set next_zona = zonas[(current_index + 1) % zonas|length] %}
-                <a href="{{ url_for('mostrar_zona', nombre_zona=next_zona) }}" class="btn-siguiente">
-                    Siguiente Zona →
-                </a>
+                {% if megazona_actual and zonas_megazona_con_datos %}
+                    {% if siguiente_zona_megazona and siguiente_zona_megazona.lower() != zona.lower() %}
+                        <a href="{{ url_for('mostrar_zona', nombre_zona=siguiente_zona_megazona) }}" class="btn-siguiente">
+                            Siguiente: {{ siguiente_zona_megazona }} →
+                        </a>
+                    {% elif zonas_megazona_con_datos|length > 1 %}
+                        <!-- Si hay más zonas pero estamos en la última, volver a la primera -->
+                        <a href="{{ url_for('mostrar_zona', nombre_zona=zonas_megazona_con_datos[0]) }}" class="btn-siguiente">
+                            Volver a: {{ zonas_megazona_con_datos[0] }} →
+                        </a>
+                    {% else %}
+                        <!-- Solo hay una zona con datos en esta Megazona -->
+                        <a href="{{ url_for('mostrar_megazona', nombre_megazona=megazona_actual) }}" class="btn-siguiente">
+                            Ver {{ megazona_actual }} →
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <!-- Fallback: navegación global si no hay Megazona -->
+                    {% set zonas_globales = ['africa', 'asia', 'churute', 'korea'] %}
+                    {% set current_index = zonas_globales.index(zona.lower()) if zona.lower() in zonas_globales else 0 %}
+                    {% set next_zona = zonas_globales[(current_index + 1) % zonas_globales|length] %}
+                    <a href="{{ url_for('mostrar_zona', nombre_zona=next_zona) }}" class="btn-siguiente">
+                        Siguiente Zona →
+                    </a>
+                {% endif %}
             </div>
         </div>
     </header>
@@ -96,8 +122,20 @@
         {% endif %}
     </section>
 
+     <!-- Logo alineado en la parte inferior izquierda -->
+    <div class="logo-container">
+        <a href="{{ url_for('portada') }}" class="btn-logo">
+            <img src="{{ url_for('static', filename='imagenes/logo.png') }}" alt="Logo Empresa" class="logo-empresa">
+        </a>
+    </div>
+
+    <!-- Footer con botón volver alineado a la derecha -->
     <footer>
-        <a href="{{ url_for('portada') }}" class="volver">← Volver al Menú</a>
+        {% if megazona_actual %}
+            <a href="{{ url_for('mostrar_megazona', nombre_megazona=megazona_actual) }}" class="volver">← Volver a {{ megazona_actual }}</a>
+        {% else %}
+            <a href="{{ url_for('menu') }}" class="volver">← Volver al Menú</a>
+        {% endif %}
     </footer>
 
     <script>

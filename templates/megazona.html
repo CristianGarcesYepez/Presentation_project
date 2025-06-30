@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Megazona {{ megazona }} - Trabajos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_megazona.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/logo.png') }}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-header">
+                <img src="{{ url_for('static', filename='imagenes/logo.png') }}" alt="Logo" class="logo-pequeno">
+            </div>
+            <div class="title-container">
+                <h1>MEGAZONA {{ megazona.upper() }}</h1>
+                <p class="subtitle">Trabajos que Inciden en Días de Secado</p>
+            </div>
+            <div class="navigation-header">
+                <a href="{{ url_for('portada') }}" class="btn-nav-header">🏠 Inicio</a>
+                <a href="{{ url_for('menu') }}" class="btn-nav-header">📋 Menú</a>
+                <a href="{{ url_for('mostrar_agenda') }}" class="btn-nav-header">📅 Agenda</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="megazona-container">
+            <!-- Información general de la megazona -->
+            <div class="megazona-info">
+                <h2>Resumen de la Megazona {{ megazona }}</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">{{ zonas_megazona|length }}</div>
+                        <div class="stat-label">Zonas Totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{ trabajos_por_zona.values()|map('length')|sum }}</div>
+                        <div class="stat-label">Trabajos Activos</div>
+                    </div>
+                    <div class="stat-card">
+                       <div class="stat-number">{{ trabajos_por_zona.values()|map('length')|sum }}</div>
+                        <div class="stat-label">Zonas con Datos</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de zonas en la megazona -->
+            <div class="zonas-en-megazona">
+                <h3>Zonas en {{ megazona }}</h3>
+                <div class="zonas-grid">
+                    {% for zona in zonas_megazona %}
+                        <div class="zona-card {% if trabajos_por_zona[zona] %}con-datos{% else %}sin-datos{% endif %}">
+                            <div class="zona-header">
+                                <h4>{{ zona }}</h4>
+                                <span class="zona-status">
+                                    {% if trabajos_por_zona[zona] %}
+                                        {{ trabajos_por_zona[zona]|length }} trabajo(s)
+                                    {% else %}
+                                        Sin datos
+                                    {% endif %}
+                                </span>
+                            </div>
+                            
+                            {% if trabajos_por_zona[zona] %}
+                                <div class="trabajos-zona">
+                                    {% for trabajo in trabajos_por_zona[zona][:3] %}
+                                        <div class="trabajo-mini">
+                                            <div class="trabajo-nombre">{{ trabajo.Trabajo }}</div>
+                                            <div class="trabajo-avance">
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: {{ trabajo.Avance }}%"></div>
+                                                </div>
+                                                <span class="avance-text">{{ trabajo.Avance }}%</span>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    
+                                    {% if trabajos_por_zona[zona]|length > 3 %}
+                                        <div class="mas-trabajos">
+                                            +{{ trabajos_por_zona[zona]|length - 3 }} trabajo(s) más
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="zona-actions">
+                                    <a href="{{ url_for('mostrar_zona', nombre_zona=zona) }}" class="btn-ver-zona">
+                                        Ver Detalles de {{ zona }}
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="sin-datos-mensaje">
+                                    <p>No hay trabajos registrados para esta zona</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Navegación entre megazonas -->
+    <div class="navigation-footer">
+        <div class="nav-container">
+            {% if megazona_anterior %}
+                <a href="{{ url_for('mostrar_megazona', nombre_megazona=megazona_anterior) }}" class="btn-nav-mega prev">
+                    ← {{ megazona_anterior }}
+                </a>
+            {% endif %}
+            
+            <div class="nav-center">
+                <a href="{{ url_for('menu') }}" class="btn-nav-mega menu">📋 Menú Principal</a>
+            </div>
+            
+            {% if siguiente_megazona %}
+                <a href="{{ url_for('mostrar_megazona', nombre_megazona=siguiente_megazona) }}" class="btn-nav-mega next">
+                    {{ siguiente_megazona }} →
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Logo inferior -->
+    <div class="logo-container">
+        <a href="{{ url_for('portada') }}" class="btn-logo">
+            <img src="{{ url_for('static', filename='imagenes/logo.png') }}" alt="Logo Empresa" class="logo-empresa">
+        </a>
+    </div>
+</body>
+</html>

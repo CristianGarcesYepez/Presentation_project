@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Semanal - IPSP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_agenda.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/logo.png') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='imagenes/logo.png') }}" alt="Logo IPSP" class="logo">
+            </div>
+            <h1 class="agenda-title">Agenda Semanal</h1>
+        </div>
+        
+        <div class="semana-info">
+            <h3 id="semana-titulo">Semana {{ info_semana.numero }} - {{ info_semana.año }}</h3>
+            <p id="semana-detalle">Del {{ info_semana.fecha_inicio }} al {{ info_semana.fecha_fin }}</p>
+        </div>
+
+        <div id="contenido-agenda">
+            {% if datos_agenda %}
+                {{ generar_tabla_agenda(datos_agenda)|safe }}
+            {% else %}
+                <div class="loading">No hay datos de agenda disponibles</div>
+            {% endif %}
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="{{ url_for('portada') }}" class="btn-nav">← Volver al Inicio</a>
+            <a href="{{ url_for('menu') }}" class="btn-nav">Ir al Menú →</a>
+        </div>
+    </div>
+
+    <script>
+        // Función para recargar datos de agenda via AJAX
+        async function recargarAgenda() {
+            try {
+                document.getElementById('contenido-agenda').innerHTML = 
+                    '<div class="loading">Actualizando datos de la agenda...</div>';
+                
+                const response = await fetch('{{ url_for("actualizar_agenda") }}');
+                const resultado = await response.json();
+                
+                if (resultado.status === 'success') {
+                    // Recargar la página para mostrar los nuevos datos
+                    window.location.reload();
+                } else {
+                    document.getElementById('contenido-agenda').innerHTML = 
+                        '<div class="error">Error al actualizar: ' + resultado.message + '</div>';
+                }
+            } catch (error) {
+                console.error('Error al recargar agenda:', error);
+                document.getElementById('contenido-agenda').innerHTML = 
+                    '<div class="error">Error de conexión al actualizar la agenda</div>';
+            }
+        }
+
+        // Función para obtener datos vía API
+        async function obtenerDatosAPI() {
+            try {
+                const response = await fetch('{{ url_for("datos_agenda_json") }}');
+                if (!response.ok) {
+                    throw new Error('Error al obtener datos de la API');
+                }
+                const datos = await response.json();
+                return datos;
+            } catch (error) {
+                console.error('Error al obtener datos de la API:', error);
+                return null;
+            }
+        }
+
+        // Exponer funciones globalmente
+        window.recargarAgenda = recargarAgenda;
+        window.obtenerDatosAPI = obtenerDatosAPI;
+
+        // Mensaje de carga completada
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Agenda semanal cargada correctamente');
+        });
+    </script>
+</body>
+</html>

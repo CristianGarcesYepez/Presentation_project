@@ -1,0 +1,249 @@
+"""
+Módulo para procesar y presentar datos de agenda desde Excel
+Integración con Flask para mostrar tareas agendadas por semana
+"""
+
+import pandas as pd
+from datetime import datetime, timedelta
+import calendar
+from flask import render_template, jsonify
+import os
+
+class AgendaHandler:
+    def __init__(self, excel_file_path='datos_agendaEJ.xlsx'):
+        """
+        Inicializa el manejador de agenda
+        
+        Args:
+            excel_file_path (str): Ruta al archivo Excel con los datos
+        """
+        self.excel_file_path = excel_file_path
+        self.df = None
+        self.semanas_data = []
+        
+    def cargar_datos(self):
+        """Carga los datos desde el archivo Excel"""
+        try:
+            if not os.path.exists(self.excel_file_path):
+                raise FileNotFoundError(f"Archivo {self.excel_file_path} no encontrado")
+            
+            # Leer el archivo Excel
+            self.df = pd.read_excel(self.excel_file_path, sheet_name=0)
+            
+            # Validar columnas necesarias
+            columnas_requeridas = ['fecha', 'titulo', 'subtitulo', 'descripcion']
+            columnas_faltantes = [col for col in columnas_requeridas if col not in self.df.columns]
+            
+            if columnas_faltantes:
+                print(f"Advertencia: Columnas faltantes: {columnas_faltantes}")
+                # Crear columnas faltantes con valores vacíos
+                for col in columnas_faltantes:
+                    self.df[col] = ''
+            
+            # Convertir fecha a datetime
+            self.df['fecha'] = pd.to_datetime(self.df['fecha'], errors='coerce')
+            
+            # Filtrar filas con fechas válidas
+            self.df = self.df.dropna(subset=['fecha'])
+            
+            return True
+            
+        except Exception as e:
+            print(f"Error cargando datos: {e}")
+            return False
+    
+    def obtener_numero_semana(self, fecha):
+        """Obtiene el número de semana del año para una fecha"""
+        return fecha.isocalendar()[1]
+    
+    def obtener_semanas_agenda(self, semanas_adelante=4):
+        """
+        Obtiene las próximas semanas con sus tareas
+        
+        Args:
+            semanas_adelante (int): Número de semanas hacia adelante a mostrar
+            
+        Returns:
+            list: Lista de diccionarios con información de semanas
+        """
+        if self.df is None or self.df.empty:
+            return []
+        
+        # Fecha actual
+        hoy = datetime.now()
+        inicio_semana_actual = hoy - timedelta(days=hoy.weekday())
+        
+        semanas_info = []
+        
+        for i in range(semanas_adelante):
+            # Calcular fecha de inicio de cada semana
+            inicio_semana = inicio_semana_actual + timedelta(weeks=i)
+            fin_semana = inicio_semana + timedelta(days=6)
+            
+            # Filtrar tareas de esta semana
+            tareas_semana = self.df[
+                (self.df['fecha'] >= inicio_semana) & 
+                (self.df['fecha'] <= fin_semana)
+            ].copy()
+            
+            # Crear información de la semana
+            semana_info = {
+                'numero_semana': self.obtener_numero_semana(inicio_semana),
+                'mes': self.obtener_mes_abreviado(inicio_semana),
+                'fecha_inicio': inicio_semana,
+                'fecha_fin': fin_semana,
+                'dias': self.generar_dias_semana(inicio_semana),
+                'tareas': self.procesar_tareas_semana(tareas_semana)
+            }
+            
+            semanas_info.append(semana_info)
+        
+        return semanas_info
+    
+    def obtener_mes_abreviado(self, fecha):
+        """Obtiene el mes abreviado en español"""
+        meses = {
+            1: 'ENE', 2: 'FEB', 3: 'MAR', 4: 'ABR',
+            5: 'MAY', 6: 'JUN', 7: 'JUL', 8: 'AGO',
+            9: 'SEP', 10: 'OCT', 11: 'NOV', 12: 'DIC'
+        }
+        return meses.get(fecha.month, str(fecha.month))
+    
+    def generar_dias_semana(self, inicio_semana):
+        """Genera la lista de días de la semana con sus números"""
+        dias = []
+        for i in range(7):
+            dia = inicio_semana + timedelta(days=i)
+            dias.append({
+                'numero': dia.day,
+                'fecha': dia,
+                'destacado': self.es_dia_especial(dia)
+            })
+        return dias
+    
+    def es_dia_especial(self, fecha):
+        """Determina si un día debe destacarse (ej: día actual)"""
+        hoy = datetime.now().date()
+        return fecha.date() == hoy
+    
+    def procesar_tareas_semana(self, tareas_df):
+        """Procesa las tareas de una semana específica"""
+        tareas = []
+        
+        for _, tarea in tareas_df.iterrows():
+            tarea_info = {
+                'titulo': str(tarea.get('titulo', '')),
+                'subtitulo': str(tarea.get('subtitulo', '')),
+                'descripcion': str(tarea.get('descripcion', '')),
+                'fecha': tarea.get('fecha'),
+                'prioridad': tarea.get('prioridad', 'normal')
+            }
+            tareas.append(tarea_info)
+        
+        # Limitar a máximo 3 tareas por semana para el diseño
+        return tareas[:3]
+
+# Funciones para integrar con Flask
+def init_agenda_routes(app):
+    """Inicializa las rutas de agenda en la aplicación Flask"""
+    
+    agenda_handler = AgendaHandler()
+    
+    @app.route('/agenda')
+    def mostrar_agenda():
+        """Ruta principal para mostrar la agenda"""
+        try:
+            # Cargar datos
+            if not agenda_handler.cargar_datos():
+                # Si no hay datos, crear datos de ejemplo
+                semanas = crear_datos_ejemplo()
+            else:
+                # Obtener semanas con datos reales
+                semanas = agenda_handler.obtener_semanas_agenda()
+            
+            return render_template('agenda.html', semanas=semanas)
+            
+        except Exception as e:
+            print(f"Error en mostrar_agenda: {e}")
+            # Fallback a datos de ejemplo
+            semanas = crear_datos_ejemplo()
+            return render_template('agenda.html', semanas=semanas)
+    
+    @app.route('/actualizar_agenda')
+    def actualizar_agenda():
+        """Ruta para actualizar los datos de la agenda vía AJAX"""
+        try:
+            success = agenda_handler.cargar_datos()
+            return jsonify({'success': success})
+        except Exception as e:
+            print(f"Error actualizando agenda: {e}")
+            return jsonify({'success': False, 'error': str(e)})
+
+def crear_datos_ejemplo():
+    """Crea datos de ejemplo si no hay archivo Excel"""
+    hoy = datetime.now()
+    inicio_semana = hoy - timedelta(days=hoy.weekday())
+    
+    semanas_ejemplo = []
+    
+    for i in range(4):
+        inicio = inicio_semana + timedelta(weeks=i)
+        
+        # Crear días de la semana
+        dias = []
+        for j in range(7):
+            dia = inicio + timedelta(days=j)
+            dias.append({
+                'numero': dia.day,
+                'fecha': dia,
+                'destacado': dia.date() == hoy.date()
+            })
+        
+        # Crear tareas de ejemplo
+        tareas_ejemplo = [
+            {
+                'titulo': f'California ({4+i}h)',
+                'subtitulo': 'Introducción Juvenil',
+                'descripcion': 'Enganche'
+            },
+            {
+                'titulo': f'Taura C ({6+i}h)',
+                'subtitulo': 'Capacitación Insigne',
+                'descripcion': ''
+            },
+            {
+                'titulo': f'Churute ({5+i}h)',
+                'subtitulo': 'Muestreo de Pesos',
+                'descripcion': ''
+            }
+        ]
+        
+        semana = {
+            'numero_semana': inicio.isocalendar()[1],
+            'mes': ['ENE','FEB','MAR','ABR','MAY','JUN',
+                   'JUL','AGO','SEP','OCT','NOV','DIC'][inicio.month-1],
+            'fecha_inicio': inicio,
+            'fecha_fin': inicio + timedelta(days=6),
+            'dias': dias,
+            'tareas': tareas_ejemplo[:3-i] if i < 3 else []
+        }
+        
+        semanas_ejemplo.append(semana)
+    
+    return semanas_ejemplo
+
+# Para uso independiente del módulo
+if __name__ == "__main__":
+    # Ejemplo de uso
+    handler = AgendaHandler()
+    
+    if handler.cargar_datos():
+        semanas = handler.obtener_semanas_agenda()
+        print("Semanas cargadas exitosamente:")
+        for semana in semanas:
+            print(f"Semana {semana['numero_semana']} - {len(semana['tareas'])} tareas")
+    else:
+        print("Error cargando datos, usando datos de ejemplo")
+        semanas = crear_datos_ejemplo()
+        for semana in semanas:
+            print(f"Semana {semana['numero_semana']} - {len(semana['tareas'])} tareas (ejemplo)")

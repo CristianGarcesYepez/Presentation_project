@@ -1,0 +1,94 @@
+{
+  "Lunes": {
+    "Fecha": "16",
+    "fecha_completa": "2025-06-16",
+    "dia_semana": "Monday",
+    "mes": "June",
+    "num_semana": 25,
+    "eventos": []
+  },
+  "Martes": {
+    "Fecha": "17",
+    "fecha_completa": "2025-06-17",
+    "dia_semana": "Tuesday",
+    "mes": "June",
+    "num_semana": 25,
+    "eventos": [
+      {
+        "Tarea": "Durán",
+        "Duración": "4h",
+        "Descripción": "Capacitación General",
+        "Estado": "Programado",
+        "Zona": "Este",
+        "Responsable": "Ana Rodríguez"
+      }
+    ]
+  },
+  "Miércoles": {
+    "Fecha": "18",
+    "fecha_completa": "2025-06-18",
+    "dia_semana": "Wednesday",
+    "mes": "June",
+    "num_semana": 25,
+    "eventos": [
+      {
+        "Tarea": "Samborondón",
+        "Duración": "3h",
+        "Descripción": "Seguimiento Proyecto",
+        "Estado": "Programado",
+        "Zona": "Norte",
+        "Responsable": "Luis Morales"
+      }
+    ]
+  },
+  "Jueves": {
+    "Fecha": "19",
+    "fecha_completa": "2025-06-19",
+    "dia_semana": "Thursday",
+    "mes": "June",
+    "num_semana": 25,
+    "eventos": [
+      {
+        "Tarea": "Milagro",
+        "Duración": "5h",
+        "Descripción": "Evaluación Mensual",
+        "Estado": "Programado",
+        "Zona": "Interior",
+        "Responsable": "Patricia Silva"
+      }
+    ]
+  },
+  "Viernes": {
+    "Fecha": "20",
+    "fecha_completa": "2025-06-20",
+    "dia_semana": "Friday",
+    "mes": "June",
+    "num_semana": 25,
+    "eventos": [
+      {
+        "Tarea": "Yaguachi",
+        "Duración": "4h",
+        "Descripción": "Capacitación Técnica",
+        "Estado": "Programado",
+        "Zona": "Interior",
+        "Responsable": "Roberto Castro"
+      }
+    ]
+  },
+  "Sábado": {
+    "Fecha": "21",
+    "fecha_completa": "2025-06-21",
+    "dia_semana": "Saturday",
+    "mes": "June",
+    "num_semana": 25,
+    "eventos": []
+  },
+  "Domingo": {
+    "Fecha": "22",
+    "fecha_completa": "2025-06-22",
+    "dia_semana": "Sunday",
+    "mes": "June",
+    "num_semana": 25,
+    "eventos": []
+  }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de Trabajos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_menu.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/logo.png') }}">
+</head>
+<body class="portada">
+    <div class="contenedor-portada">
+        <h1>INFORME DE TRABAJOS</h1>
+        <h2>SEMANA #{{ semana - 1}}</h2>
+    </div>
+    <div class="zona-links">
+        <h3>Selecciona una Megazona</h3>
+        <ul>
+            {% for megazona in megazonas_list %}
+                <li>
+                    <a href="{{ url_for('mostrar_megazona', nombre_megazona=megazona) }}" 
+                       class="megazona-btn{% if not megazonas[megazona].tiene_datos %} sin-datos{% endif %}">
+                        <span class="megazona-nombre">{{ megazona }}</span>
+                        <span class="megazona-info">
+                            {{ megazonas[megazona].zonas_disponibles|length }}/{{ megazonas[megazona].total_zonas }} zonas con datos
+                        </span>
+                        {% if megazonas[megazona].zonas_disponibles %}
+                            <span class="zona-principal">Zona principal: {{ megazonas[megazona].zona_principal }}</span>
+                        {% else %}
+                            <span class="zona-principal sin-datos-text">Sin datos disponibles</span>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="agenda-link">
+        <h3>Agenda Semanal</h3>
+        <ul>
+            <li><a href="{{ url_for('mostrar_agenda') }}"><span>Ver Agenda Semanal</span></a></li>
+        </ul>
+    </div>
+
+     <!-- Logo alineado en la parte inferior izquierda -->
+    <div class="logo-container">
+        <a href="{{ url_for('portada') }}" class="btn-logo">
+            <img src="{{ url_for('static', filename='imagenes/logo.png') }}" alt="Logo Empresa" class="logo-empresa">
+        </a>
+    </div>
+</body>
+</html>
