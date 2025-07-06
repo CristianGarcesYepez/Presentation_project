@@ -1,94 +1,103 @@
 {
   "Lunes": {
-    "Fecha": "16",
-    "fecha_completa": "2025-06-16",
+    "Fecha": "23",
+    "fecha_completa": "2025-06-23",
     "dia_semana": "Monday",
     "mes": "June",
-    "num_semana": 25,
+    "num_semana": 26,
     "eventos": []
   },
   "Martes": {
-    "Fecha": "17",
-    "fecha_completa": "2025-06-17",
+    "Fecha": "24",
+    "fecha_completa": "2025-06-24",
     "dia_semana": "Tuesday",
     "mes": "June",
-    "num_semana": 25,
+    "num_semana": 26,
     "eventos": [
       {
-        "Tarea": "Durán",
-        "Duración": "4h",
-        "Descripción": "Capacitación General",
+        "Tarea": "Guayaquil Centro",
+        "Duración": "2h",
+        "Descripción": "Reunión Coordinación",
         "Estado": "Programado",
-        "Zona": "Este",
-        "Responsable": "Ana Rodríguez"
+        "Zona": "Centro",
+        "Responsable": "Juan Pérez"
       }
     ]
   },
   "Miércoles": {
-    "Fecha": "18",
-    "fecha_completa": "2025-06-18",
+    "Fecha": "25",
+    "fecha_completa": "2025-06-25",
     "dia_semana": "Wednesday",
     "mes": "June",
-    "num_semana": 25,
+    "num_semana": 26,
     "eventos": [
       {
-        "Tarea": "Samborondón",
+        "Tarea": "Pascuales",
         "Duración": "3h",
-        "Descripción": "Seguimiento Proyecto",
+        "Descripción": "Planificación Semanal",
         "Estado": "Programado",
-        "Zona": "Norte",
-        "Responsable": "Luis Morales"
+        "Zona": "Oeste",
+        "Responsable": "Carmen Vega"
       }
     ]
   },
   "Jueves": {
-    "Fecha": "19",
-    "fecha_completa": "2025-06-19",
+    "Fecha": "26",
+    "fecha_completa": "2025-06-26",
     "dia_semana": "Thursday",
     "mes": "June",
-    "num_semana": 25,
+    "num_semana": 26,
     "eventos": [
       {
-        "Tarea": "Milagro",
-        "Duración": "5h",
-        "Descripción": "Evaluación Mensual",
+        "Tarea": "La Libertad",
+        "Duración": "4h",
+        "Descripción": "Revisión Resultados",
         "Estado": "Programado",
-        "Zona": "Interior",
-        "Responsable": "Patricia Silva"
+        "Zona": "Costa",
+        "Responsable": "Diego Herrera"
       }
     ]
   },
   "Viernes": {
-    "Fecha": "20",
-    "fecha_completa": "2025-06-20",
+    "Fecha": "27",
+    "fecha_completa": "2025-06-27",
     "dia_semana": "Friday",
     "mes": "June",
-    "num_semana": 25,
+    "num_semana": 26,
     "eventos": [
       {
-        "Tarea": "Yaguachi",
-        "Duración": "4h",
-        "Descripción": "Capacitación Técnica",
+        "Tarea": "Salinas",
+        "Duración": "5h",
+        "Descripción": "Capacitación Avanzada",
         "Estado": "Programado",
-        "Zona": "Interior",
-        "Responsable": "Roberto Castro"
+        "Zona": "Costa",
+        "Responsable": "Diego Herrera"
       }
     ]
   },
   "Sábado": {
-    "Fecha": "21",
-    "fecha_completa": "2025-06-21",
+    "Fecha": "28",
+    "fecha_completa": "2025-06-28",
     "dia_semana": "Saturday",
     "mes": "June",
-    "num_semana": 25,
-    "eventos": []
+    "num_semana": 26,
+    "eventos": [
+      {
+        "Tarea": "Playas",
+        "Duración": "3h",
+        "Descripción": "Seguimiento Costa",
+        "Estado": "Programado",
+        "Zona": "Costa",
+        "Responsable": "Diego Herrera"
+      }
+    ]
   },
   "Domingo": {
-    "Fecha": "22",
-    "fecha_completa": "2025-06-22",
+    "Fecha": "29",
+    "fecha_completa": "2025-06-29",
     "dia_semana": "Sunday",
     "mes": "June",
-    "num_semana": 25,
+    "num_semana": 26,
     "eventos": []
   }
 }
